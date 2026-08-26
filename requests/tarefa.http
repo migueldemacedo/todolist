@@ -1,0 +1,26 @@
+### Criar uma tarefa
+POST http://localhost:8080/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Estudar é ruim",
+  "concluida": false
+}
+
+### Listar todas as tarefas
+GET http://localhost:8080/tarefas
+
+### Buscar tarefa por id
+GET http://localhost:8080/tarefas/2
+
+### Deletar tarefa por id
+DELETE http://localhost:8080/tarefas/1
+
+### Editar tarefa
+PUT http://localhost:8080/tarefas/3
+Content-Type: application/json
+
+{
+  "titulo": "Estudar é legal",
+  "concluida": false
+}
