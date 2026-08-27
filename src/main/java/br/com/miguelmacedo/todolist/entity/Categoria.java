@@ -20,6 +20,7 @@ public class Categoria {
     private String titulo;
 
     @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
     private List<Tarefa> tarefas = new ArrayList<>();
 
     public Categoria() {

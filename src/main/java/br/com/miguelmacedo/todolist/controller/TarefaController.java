@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.miguelmacedo.todolist.dto.TarefaRequestDTO;
+import br.com.miguelmacedo.todolist.dto.TarefaResponseDTO;
 import br.com.miguelmacedo.todolist.entity.Tarefa;
 import br.com.miguelmacedo.todolist.service.TarefaService;
 
@@ -26,8 +28,8 @@ public class TarefaController {
     }
 
     @PostMapping
-    public ResponseEntity<Tarefa> criar(@RequestBody Tarefa tarefa) {
-        Tarefa t = tarefaService.criar(tarefa);
+    public ResponseEntity<TarefaResponseDTO> criar(@RequestBody TarefaRequestDTO dto) {
+        TarefaResponseDTO t = tarefaService.criar(dto);
 
         return ResponseEntity.created(null).body(t);
     }

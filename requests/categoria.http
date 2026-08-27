@@ -3,7 +3,7 @@ POST http://localhost:8080/categorias
 Content-Type: application/json
 
 {
-  "titulo": "Estudos"
+  "titulo": "Trabalho"
 }
 
 ### Listar todas as categorias
