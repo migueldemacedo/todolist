@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Tarefa {
@@ -16,9 +14,9 @@ public class Tarefa {
     private String titulo;
     private boolean concluida;
     
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    // @ManyToOne
+    // @JoinColumn(name = "categoria_id")
+    // private Categoria categoria;
 
     public Tarefa() {
 
@@ -48,11 +46,11 @@ public class Tarefa {
         this.concluida = concluida;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
+    // public Categoria getCategoria() {
+    //     return categoria;
+    // }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
+    // public void setCategoria(Categoria categoria) {
+    //     this.categoria = categoria;
+    // }
 }

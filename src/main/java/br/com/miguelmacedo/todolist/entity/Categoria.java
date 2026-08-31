@@ -19,9 +19,9 @@ public class Categoria {
     private Long id;
     private String titulo;
 
-    @OneToMany(mappedBy = "categoria")
-    @JsonIgnore
-    private List<Tarefa> tarefas = new ArrayList<>();
+    // @OneToMany(mappedBy = "categoria")
+    // @JsonIgnore
+    // private List<Tarefa> tarefas = new ArrayList<>();
 
     public Categoria() {
 
@@ -43,7 +43,7 @@ public class Categoria {
         this.titulo = titulo;
     }
 
-    public List<Tarefa> getTarefas() {
-        return tarefas;
-    }
+    // public List<Tarefa> getTarefas() {
+    //     return tarefas;
+    // }
 }

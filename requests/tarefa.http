@@ -3,28 +3,24 @@ POST http://localhost:8080/tarefas
 Content-Type: application/json
 
 {
-  "titulo": "Estudar é ruim",
-  "concluida": false,
-  "categoriaId": 1
+  "titulo": "Fazer o PI",
+  "concluida": false
 }
 
 ### Listar todas as tarefas
 GET http://localhost:8080/tarefas
 
 ### Buscar tarefa por id
-GET http://localhost:8080/tarefas/4
+GET http://localhost:8080/tarefas/1
 
 ### Deletar tarefa por id
 DELETE http://localhost:8080/tarefas/1
 
 ### Editar tarefa
-PUT http://localhost:8080/tarefas/4
+PUT http://localhost:8080/tarefas/2
 Content-Type: application/json
 
 {
   "titulo": "Estudar Spring Boot",
-  "concluida": false,
-  "categoria": {
-    "id": 1
-  }
+  "concluida": false
 }
