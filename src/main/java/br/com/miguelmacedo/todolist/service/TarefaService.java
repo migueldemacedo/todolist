@@ -7,49 +7,44 @@ import org.springframework.stereotype.Service;
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
 import br.com.miguelmacedo.todolist.entity.Tarefa;
+import br.com.miguelmacedo.todolist.mapper.TarefaMapper;
 import br.com.miguelmacedo.todolist.repository.TarefaRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
+    private final TarefaMapper tarefaMapper;
 
-    public TarefaService(TarefaRepository tarefaRepository) {
-        this.tarefaRepository = tarefaRepository;
+    public TarefaResponse criar(TarefaRequest request) {
+        Tarefa nova = tarefaMapper.toEntity(request);
+        return tarefaMapper.toResponse(tarefaRepository.save(nova));
     }
 
-    public TarefaResponse criar(TarefaRequest dto) {
-        Tarefa tarefa = new Tarefa();
-
-        tarefa.setTitulo(dto.titulo());
-        tarefa.setConcluida(dto.concluida());
-
-        tarefa = tarefaRepository.save(tarefa);
-
-        return new TarefaResponse(
-            tarefa.getId(),
-            tarefa.getTitulo(),
-            tarefa.getConcluida()
-        );
-    }
-
-    public List<Tarefa> listarTodas() {
-        return tarefaRepository.findAll();
+    public List<TarefaResponse> listarTodas() {
+        return tarefaRepository.findAll().stream()
+            .map(tarefaMapper::toResponse)
+            .toList();
     }
 
     public void deletarPorId(Long id) {
         tarefaRepository.deleteById(id);;
     }
 
-    public Tarefa buscarPorId(Long id) {
-        return tarefaRepository.findById(id).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+    public TarefaResponse buscarPorId(Long id) {
+        return tarefaMapper.toResponse(buscarEntidade(id));
     }
 
-    public Tarefa atualizar(Long id, Tarefa tarefa) {
-        Tarefa tarefaNova = tarefaRepository.findById(id).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
-        tarefaNova.setTitulo(tarefa.getTitulo());
-        tarefaNova.setConcluida(tarefa.getConcluida());
+    public TarefaResponse atualizar(Long id, TarefaRequest request) {
+        Tarefa existente = buscarEntidade(id);
+        tarefaMapper.copyToEntity(request, existente);
 
-        return tarefaRepository.save(tarefaNova);
+        return tarefaMapper.toResponse(tarefaRepository.save(existente));
+    }
+
+    private Tarefa buscarEntidade(Long id) {
+        return tarefaRepository.findById(id).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
     }
 }

@@ -14,18 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
-import br.com.miguelmacedo.todolist.entity.Tarefa;
 import br.com.miguelmacedo.todolist.service.TarefaService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/tarefas")
+@RequiredArgsConstructor
 public class TarefaController {
 
     private final TarefaService tarefaService;
-
-    public TarefaController(TarefaService tarefaService) {
-        this.tarefaService = tarefaService;
-    }
 
     @PostMapping
     public ResponseEntity<TarefaResponse> criar(@RequestBody TarefaRequest dto) {
@@ -35,15 +32,15 @@ public class TarefaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tarefa>> listarTodas() {
-        List<Tarefa> tarefas = tarefaService.listarTodas();
+    public ResponseEntity<List<TarefaResponse>> listarTodas() {
+        List<TarefaResponse> tarefas = tarefaService.listarTodas();
 
         return ResponseEntity.ok().body(tarefas);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarefa> atualizar(@PathVariable Long id, @RequestBody Tarefa tarefa) {
-        Tarefa t = tarefaService.atualizar(id, tarefa);
+    public ResponseEntity<TarefaResponse> atualizar(@PathVariable Long id, @RequestBody TarefaRequest tarefa) {
+        TarefaResponse t = tarefaService.atualizar(id, tarefa);
 
         return ResponseEntity.ok().body(t);
     }
@@ -56,8 +53,8 @@ public class TarefaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tarefa> buscarPorId(@PathVariable Long id) {
-        Tarefa tarefa = tarefaService.buscarPorId(id);
+    public ResponseEntity<TarefaResponse> buscarPorId(@PathVariable Long id) {
+        TarefaResponse tarefa = tarefaService.buscarPorId(id);
 
         return ResponseEntity.ok().body(tarefa);
     }
