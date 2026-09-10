@@ -22,7 +22,7 @@ public class Tarefa {
     private Long id;
     
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, length = 150)
     private String titulo;
     
     @Setter

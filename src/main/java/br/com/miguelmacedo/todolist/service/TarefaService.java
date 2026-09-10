@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
 import br.com.miguelmacedo.todolist.entity.Tarefa;
+import br.com.miguelmacedo.todolist.exception.TarefaNaoEncontradaException;
 import br.com.miguelmacedo.todolist.mapper.TarefaMapper;
 import br.com.miguelmacedo.todolist.repository.TarefaRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,6 @@ public class TarefaService {
     }
 
     private Tarefa buscarEntidade(Long id) {
-        return tarefaRepository.findById(id).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+        return tarefaRepository.findById(id).orElseThrow(() -> new TarefaNaoEncontradaException(id));
     }
 }

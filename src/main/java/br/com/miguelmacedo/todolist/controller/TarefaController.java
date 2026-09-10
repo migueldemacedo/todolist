@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
 import br.com.miguelmacedo.todolist.service.TarefaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,7 +26,7 @@ public class TarefaController {
     private final TarefaService tarefaService;
 
     @PostMapping
-    public ResponseEntity<TarefaResponse> criar(@RequestBody TarefaRequest dto) {
+    public ResponseEntity<TarefaResponse> criar(@Valid @RequestBody TarefaRequest dto) {
         TarefaResponse t = tarefaService.criar(dto);
 
         return ResponseEntity.created(null).body(t);
@@ -39,7 +40,7 @@ public class TarefaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TarefaResponse> atualizar(@PathVariable Long id, @RequestBody TarefaRequest tarefa) {
+    public ResponseEntity<TarefaResponse> atualizar(@PathVariable Long id, @Valid @RequestBody TarefaRequest tarefa) {
         TarefaResponse t = tarefaService.atualizar(id, tarefa);
 
         return ResponseEntity.ok().body(t);
