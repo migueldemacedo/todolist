@@ -3,7 +3,7 @@ POST http://localhost:8080/categorias
 Content-Type: application/json
 
 {
-  "titulo": "Trabalho"
+  "nome": "Trabalho"
 }
 
 ### Listar todas as categorias
@@ -20,5 +20,5 @@ PUT http://localhost:8080/categorias/3
 Content-Type: application/json
 
 {
-  "titulo": "Lazer"
+  "nome": "Lazer"
 }

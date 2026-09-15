@@ -12,36 +12,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.miguelmacedo.todolist.entity.Categoria;
+import br.com.miguelmacedo.todolist.dto.CategoriaRequest;
+import br.com.miguelmacedo.todolist.dto.CategoriaResponse;
 import br.com.miguelmacedo.todolist.service.CategoriaService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/categorias")
+@RequiredArgsConstructor
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
 
-    public CategoriaController(CategoriaService categoriaService) {
-        this.categoriaService = categoriaService;
-    }
-
     @PostMapping
-    public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria) {
-        Categoria t = categoriaService.criar(categoria);
+    public ResponseEntity<CategoriaResponse> criar(@Valid @RequestBody CategoriaRequest dto) {
+        CategoriaResponse t = categoriaService.criar(dto);
 
         return ResponseEntity.created(null).body(t);
     }
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> listarTodas() {
-        List<Categoria> categorias = categoriaService.listarTodas();
+    public ResponseEntity<List<CategoriaResponse>> listarTodas() {
+        List<CategoriaResponse> categorias = categoriaService.listarTodas();
 
         return ResponseEntity.ok().body(categorias);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
-        Categoria t = categoriaService.atualizar(id, categoria);
+    public ResponseEntity<CategoriaResponse> atualizar(@PathVariable Long id, @Valid @RequestBody CategoriaRequest categoria) {
+        CategoriaResponse t = categoriaService.atualizar(id, categoria);
 
         return ResponseEntity.ok().body(t);
     }
@@ -54,8 +54,8 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
-        Categoria categoria = categoriaService.buscarPorId(id);
+    public ResponseEntity<CategoriaResponse> buscarPorId(@PathVariable Long id) {
+        CategoriaResponse categoria = categoriaService.buscarPorId(id);
 
         return ResponseEntity.ok().body(categoria);
     }

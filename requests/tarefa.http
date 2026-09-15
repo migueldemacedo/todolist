@@ -3,12 +3,13 @@ POST http://localhost:8080/tarefas
 Content-Type: application/json
 
 {
-  "titulo": "a",
-  "concluida": false
+  "titulo": "Brincar com o doguinho",
+  "status": "CONCLUIDA",
+  "categoriaId": 2
 }
 
 ### Listar todas as tarefas
-GET http://localhost:8080/tarefas
+GET http://localhost:8080/tarefas?categoriaId=1
 
 ### Buscar tarefa por id
 GET http://localhost:8080/tarefas/6

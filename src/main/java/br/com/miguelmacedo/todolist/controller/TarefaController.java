@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
+import br.com.miguelmacedo.todolist.entity.StatusTarefa;
 import br.com.miguelmacedo.todolist.service.TarefaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +35,12 @@ public class TarefaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TarefaResponse>> listarTodas() {
-        List<TarefaResponse> tarefas = tarefaService.listarTodas();
+    public ResponseEntity<List<TarefaResponse>> listarTodas(
+        @RequestParam(required = false) StatusTarefa status,
+        @RequestParam(required = false) Long categoriaId,
+        @RequestParam(required = false) String titulo
+    ) {
+        List<TarefaResponse> tarefas = tarefaService.listarTodas(status, categoriaId, titulo);
 
         return ResponseEntity.ok().body(tarefas);
     }
