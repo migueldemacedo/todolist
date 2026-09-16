@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Listar todas as tarefas
-GET http://localhost:8080/tarefas?categoriaId=1
+GET http://localhost:8080/tarefas?page=0&size=10&sort=titulo,ASC
 
 ### Buscar tarefa por id
 GET http://localhost:8080/tarefas/6

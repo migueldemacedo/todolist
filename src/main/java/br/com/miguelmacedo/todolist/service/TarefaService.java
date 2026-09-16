@@ -2,9 +2,12 @@ package br.com.miguelmacedo.todolist.service;
 
 import java.util.List;
 
+import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.miguelmacedo.todolist.dto.PageResponse;
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
 import br.com.miguelmacedo.todolist.entity.Categoria;
@@ -35,10 +38,14 @@ public class TarefaService {
         return tarefaMapper.toResponse(tarefaRepository.save(nova));
     }
 
-    public List<TarefaResponse> listarTodas(StatusTarefa status, Long categoriaId, String titulo) {
-        return tarefaRepository.buscarComFiltros(status, categoriaId, titulo).stream()
+    public PageResponse<TarefaResponse> listarTodas(StatusTarefa status, Long categoriaId, String titulo, org.springframework.data.domain.Pageable pageable) {
+        Page<Tarefa> pagina =  tarefaRepository.buscarComFiltros(status, categoriaId, titulo, pageable);
+
+        List<TarefaResponse> conteudo = pagina.getContent().stream()
             .map(tarefaMapper::toResponse)
             .toList();
+
+        return PageResponse.de(pagina, conteudo);
     }
 
     @Transactional 

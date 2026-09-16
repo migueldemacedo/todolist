@@ -1,7 +1,8 @@
 package br.com.miguelmacedo.todolist.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.miguelmacedo.todolist.dto.PageResponse;
 import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
 import br.com.miguelmacedo.todolist.entity.StatusTarefa;
@@ -35,14 +37,13 @@ public class TarefaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TarefaResponse>> listarTodas(
+    public PageResponse<TarefaResponse> listarTodas(
         @RequestParam(required = false) StatusTarefa status,
         @RequestParam(required = false) Long categoriaId,
-        @RequestParam(required = false) String titulo
+        @RequestParam(required = false) String titulo,
+        @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        List<TarefaResponse> tarefas = tarefaService.listarTodas(status, categoriaId, titulo);
-
-        return ResponseEntity.ok().body(tarefas);
+        return tarefaService.listarTodas(status, categoriaId, titulo, pageable);
     }
 
     @PutMapping("/{id}")
