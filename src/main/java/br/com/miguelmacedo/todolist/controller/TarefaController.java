@@ -1,5 +1,6 @@
 package br.com.miguelmacedo.todolist.controller;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -19,17 +20,24 @@ import br.com.miguelmacedo.todolist.dto.TarefaRequest;
 import br.com.miguelmacedo.todolist.dto.TarefaResponse;
 import br.com.miguelmacedo.todolist.entity.StatusTarefa;
 import br.com.miguelmacedo.todolist.service.TarefaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/tarefas")
 @RequiredArgsConstructor
+@Tag(name = "Tarefas", description = "CRUD de Tarefas")
 public class TarefaController {
 
     private final TarefaService tarefaService;
 
     @PostMapping
+    @Operation(
+        summary = "Cria uma tarefa",
+        description = "Filtros são opctionais e combináveis..."
+    )
     public ResponseEntity<TarefaResponse> criar(@Valid @RequestBody TarefaRequest dto) {
         TarefaResponse t = tarefaService.criar(dto);
 
@@ -41,7 +49,7 @@ public class TarefaController {
         @RequestParam(required = false) StatusTarefa status,
         @RequestParam(required = false) Long categoriaId,
         @RequestParam(required = false) String titulo,
-        @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+        @ParameterObject @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return tarefaService.listarTodas(status, categoriaId, titulo, pageable);
     }
